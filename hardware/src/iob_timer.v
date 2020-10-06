@@ -27,14 +27,13 @@ module iob_timer (
    always @* begin
    	rst_soft_en = 1'b0;
    	tmp_reg_en = 1'b0;
-        rdata = 32'b0;
-   	if(valid)
-   	  case (address)
-   	    `TIMER_RESET:     rst_soft_en = 1'b1;
-   	    `TIMER_STOP:      tmp_reg_en = 1'b1;
-   	    `TIMER_DATA_HIGH: rdata = tmp_reg[63:32];
-   	    `TIMER_DATA_LOW:  rdata = tmp_reg[31:0];
-   	    default:;
+        rdata = 32'b0;)
+ 	  case (address)
+ 	    `TIMER_RESET:     rst_soft_en = 1'b1;
+ 	    `TIMER_STOP:      tmp_reg_en = 1'b1;
+ 	    `TIMER_DATA_HIGH: rdata = tmp_reg[63:32];
+ 	    `TIMER_DATA_LOW:  rdata = tmp_reg[31:0];
+ 	    default:;
    	  endcase
    end 
      	
