@@ -22,37 +22,22 @@ module iob_timer
    `SIGNAL(rst_int, 1)
    `COMB rst_int = rst | TIMER_RESET;
 
-   always @* begin
-   	rst_soft_en = 1'b0;
-   	tmp_reg_en = 1'b0;
-    rdata = 32'b0;
- 	  case (address)
- 	    `TIMER_RESET:     rst_soft_en = 1'b1;
- 	    `TIMER_STOP:      tmp_reg_en = 1'b1;
- 	    `TIMER_DATA_HIGH: rdata = tmp_reg[63:32];
- 	    `TIMER_DATA_LOW:  rdata = tmp_reg[31:0];
- 	    default:;
-   	  endcase
-   end 
-     	
-   //soft reset pulse
-   always @(posedge clk, posedge rst)
-     if(rst)
-       rst_soft <= 1'b0;
-     else if (rst_soft_en)
-       rst_soft <= wdata[0];
-     else
-       rst_soft <= 1'b0;
-   
-   // cpu interface ready signal
-   always @(posedge clk, posedge rst)
-     if(rst)
-       ready <= 1'b0;
-     else 
-       ready <= valid;
-       
-   assign rst_int = rst | rst_soft;
+   //write signal
+   `SIGNAL(write, 1) 
+   `COMB write = | wstrb;
 
+   //
+   //BLOCK 64-bit time counter & Free-running 64-bit counter with enable and soft reset capabilities
+   //
+   `SIGNAL_OUT(TIMER_VALUE, 2*DATA_W)
+   timer_core timer0
+     (
+      .TIMER_ENABLE(TIMER_ENABLE),
+      .TIMER_SAMPLE(TIMER_SAMPLE),
+      .TIMER_VALUE(TIMER_VALUE),
+      .clk(clk),
+      .rst(rst_int)
+      );
    
    
    //ready signal   
