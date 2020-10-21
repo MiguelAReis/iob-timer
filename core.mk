@@ -30,13 +30,13 @@ SIM_DIR ?=hardware/simulation/$(SIMULATOR)
 #
 #FPGA_FAMILY ?=CYCLONEV-GT
 FPGA_FAMILY ?=XCKU
-#FPGA_SERVER ?=localhost
-FPGA_SERVER ?=pudim-flan.iobundle.com
+FPGA_SERVER ?=localhost
+#FPGA_SERVER ?=pudim-flan.iobundle.com
 FPGA_USER ?= $(USER)
 
 ifeq ($(FPGA_FAMILY),XCKU)
 	FPGA_COMP:=vivado
-	FPGA_PART:=xcku040-fbva676-1-c
+	FPGA_PART:=xc7a35tcpg236-1
 else
 	FPGA_COMP:=quartus
 	FPGA_PART:=5CGTFD9E5F35C7
@@ -54,7 +54,7 @@ endif
 #
 DOC_TYPE:=pb
 #DOC_TYPE:=ug
-INTEL ?=1
+INTEL ?=0
 XILINX ?=1
 
 VLINE:="V$(VERSION)"

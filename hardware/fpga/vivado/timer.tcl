@@ -1,5 +1,5 @@
 set TOP [lindex $argv 0]
-set PART xcku040-fbva676-1-c
+set PART xc7a35tcpg236-1
 
 set VSRC [lindex $argv 1]
 set HW_INCLUDE [lindex $argv 2]
